@@ -8,6 +8,7 @@ use Exception;
 
 class DisposableEmail extends Validator
 {
+    // https://github.com/ivolo/disposable-email-domains#api
     public function validateDisposableEmail($attribute, $value)
     {
         $url = 'https://open.kickbox.com/v1/disposable/' .
