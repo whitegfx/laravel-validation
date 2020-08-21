@@ -6,7 +6,7 @@ use Illuminate\Validation\Validator;
 use Illuminate\Support\Str;
 use Exception;
 
-class DisposableEmail extends Validator
+class DisposableEmail
 {
     // https://github.com/ivolo/disposable-email-domains#api
     public function validateDisposableEmail($attribute, $value)

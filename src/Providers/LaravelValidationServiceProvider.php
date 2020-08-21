@@ -38,11 +38,11 @@ class LaravelValidationServiceProvider extends ServiceProvider
          * Uncomment the second function call to load the JSON translations.
          * Uncomment the third function call to make the translations publishable using the 'translations' tag.
          */
-        // $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'laravel-validation');
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'laravel-validation');
         // $this->loadJsonTranslationsFrom(__DIR__.'/../../resources/lang', 'laravel-validation');
-        // $this->publishes([
-        //     __DIR__.'/../../resources/lang' => resource_path('lang/vendor/laravel-validation'),
-        // ], 'translations');
+        $this->publishes([
+            __DIR__ . '/../../resources/lang' => resource_path('lang/vendor/laravel-validation'),
+        ], 'translations');
 
         /**
          * Views
@@ -86,9 +86,41 @@ class LaravelValidationServiceProvider extends ServiceProvider
         // $this->publishes([
         //     __DIR__.'/../../database/migrations/' => database_path('migrations')
         // ], 'migrations');
-        $this->app->validator->resolver(function ($translator, $data, $rules, $messages) {
-            return new DisposableEmail($translator, $data, $rules, $messages);
-        });
+
+        // $this->app->validator->resolver(function ($translator, $data, $rules, $messages) {
+        //     return new DisposableEmail($translator, $data, $rules, $messages);
+        // });
+        var_dump(trans("laravel-validation::validation.disposable_email"));
+        $this->registerValidationRules($this->app['validator']);
+        /*
+
+        public function boot()
+        {
+            $this->registerValidationRules($this->app['validator']);
+        }
+
+        protected function registerValidationRules(\Illuminate\Contracts\Validation\Factory $validator)
+        {
+            $validator->extend('zip', 'Gvt\Support\Validators\GvtRuleValidator@validateZip');
+            $validator->extend('state', 'Gvt\Support\Validators\GvtRuleValidator@validateStateCode');
+            $validator->extend('phone', 'Gvt\Support\Validators\GvtRuleValidator@validatePhone');
+            $validator->extend('county', 'Gvt\Support\Validators\GvtRuleValidator@validateCounty');
+            $validator->extend('party', 'Gvt\Support\Validators\GvtRuleValidator@validatePoliticalParty');
+            $validator->extend('ballot_style', 'Gvt\Support\Validators\GvtRuleValidator@validateBallotStyle');
+        }
+
+        */
+    }
+
+    protected function registerValidationRules(\Illuminate\Contracts\Validation\Factory $validator)
+    {
+        // $validator->replacer('disposable_email', function ($message, $attribute, $rule, $parameters) {
+        //     // var_dump($message);
+        //     //trans("validation.disposable_email");
+        //     //exit;
+        //     return str_replace('validation.disposable_email', trans("validation.disposable_email"), $message);
+        // });
+        $validator->extend('disposable_email', 'Whitegfx\LaravelValidation\Rules\DisposableEmail@validateDisposableEmail', trans("laravel-validation::validation.disposable_email"));
     }
 
     /**
