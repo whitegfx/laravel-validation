@@ -90,7 +90,6 @@ class LaravelValidationServiceProvider extends ServiceProvider
         // $this->app->validator->resolver(function ($translator, $data, $rules, $messages) {
         //     return new DisposableEmail($translator, $data, $rules, $messages);
         // });
-        var_dump(trans("laravel-validation::validation.disposable_email"));
         $this->registerValidationRules($this->app['validator']);
         /*
 
