@@ -3,7 +3,6 @@
 namespace Whitegfx\LaravelValidation\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Whitegfx\LaravelValidation\Rules\DisposableEmail;
 
 class LaravelValidationServiceProvider extends ServiceProvider
 {
@@ -120,6 +119,7 @@ class LaravelValidationServiceProvider extends ServiceProvider
         //     return str_replace('validation.disposable_email', trans("validation.disposable_email"), $message);
         // });
         $validator->extend('disposable_email', 'Whitegfx\LaravelValidation\Rules\DisposableEmail@validateDisposableEmail', trans("laravel-validation::validation.disposable_email"));
+        $validator->extend('zip_code', 'Whitegfx\LaravelValidation\Rules\ZipCode@validateZipCode', trans("laravel-validation::validation.zip_code"));
     }
 
     /**
