@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 use App;
+use Illuminate\Filesystem\Filesystem;
 
 class ZipCode
 {
@@ -14,7 +15,7 @@ class ZipCode
     public function validateZipCode($attribute, $value)
     {
         try {
-            $zipCocdes = $this->getCsvColumn("", 0);
+            $zipCocdes = $this->getCsvColumn();
             if (count($zipCocdes) == 0) {
                 return false;
             }
@@ -27,14 +28,26 @@ class ZipCode
     }
     // https://www.posta.sk/sluzby/postove-smerovacie-cisla
     // https://www.ceskaposta.cz/documents/10180/3738087/db_psc_a.zip/d28208a4-279a-10e3-205a-e44ccc6214b2
-    protected function getCsvColumn($csvPath, $columnIndex = 0, $isStringColumn = false, $columnName = "")
+    protected function getCsvColumn($columnIndex = 0, $isStringColumn = false, $columnName = "")
     {
 
         $format = env('ZIP_CODES_FORMAT', "zip_codes_%s.csv");
         $locale = App::getLocale();
 
         $codes = array();
-        $csvPath = Storage::disk('local')->path(sprintf($format, $locale));
+        $fileName = sprintf($format, $locale);
+
+        // resources vendor file
+        $csvPath = resource_path('vendor/laravel-validation/json/' . $fileName);
+        $filesystem = new Filesystem;
+        $isExists = $filesystem->exists($csvPath);
+
+        // package file
+        if (!$isExists) {
+            $csvPath = __DIR__ . '/../../resources/json/' . $fileName;
+            $isExists = $filesystem->exists($csvPath);
+        }
+
         $linesArray = @file($csvPath, FILE_SKIP_EMPTY_LINES);
 
         if ($linesArray === false) {

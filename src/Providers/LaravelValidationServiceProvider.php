@@ -13,6 +13,8 @@ class LaravelValidationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        //php artisan vendor:publish --provider="Whitegfx\LaravelValidation\Providers\LaravelValidationServiceProvider" --tag=json
+
         /**
          * Config
          *
@@ -74,6 +76,10 @@ class LaravelValidationServiceProvider extends ServiceProvider
         // $this->publishes([
         //     __DIR__.'/../../public' => public_path('vendor/laravel-validation'),
         // ], 'public');
+
+        $this->publishes([
+            __DIR__ . '/../../resources/json' => resource_path('vendor/laravel-validation/json'),
+        ], 'json');
 
         /**
          * Migrations
