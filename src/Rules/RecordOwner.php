@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Str;
 
+// credits https://itnext.io/laravel-validation-rule-record-owner-3f2adf86902d
 class RecordOwner
 {
 
