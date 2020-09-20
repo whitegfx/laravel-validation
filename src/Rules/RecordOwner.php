@@ -21,18 +21,22 @@ class RecordOwner
             $table = $route->parameterNames[0];
             $field = 'id';
             $rowId = $route->parameters[$table];
+            $table = Str::snake($table);
         } else {
+
             $table = $parameters[0];
             $field = $parameters[1];
             $rowId = $parameters[2];
         }
+
+        // dd([$table, $field, $rowId], [Str::plural($table)], request()->route(), Auth::user()->isAdmin(), $attribute, $value, $parameters);
 
         $authId = Auth::id();
         $exists = DB::table(Str::plural($table))
             ->where($field, $rowId)
             ->where('user_id', $authId)
             ->exists();
-        //        dd([$table, $field, $rowId], request()->route(), Auth::user()->isAdmin(), $exists, $attribute, $value, $parameters);
+        //dd([$table, $field, $rowId], request()->route(), Auth::user()->isAdmin(), $exists, $attribute, $value, $parameters);
 
         return $exists;
     }
