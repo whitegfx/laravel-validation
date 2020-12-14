@@ -127,6 +127,8 @@ class LaravelValidationServiceProvider extends ServiceProvider
         $validator->extend('disposable_email', 'Whitegfx\LaravelValidation\Rules\DisposableEmail@validateDisposableEmail', trans("laravel-validation::validation.disposable_email"));
         $validator->extend('zip_code', 'Whitegfx\LaravelValidation\Rules\ZipCode@validateZipCode', trans("laravel-validation::validation.zip_code"));
         $validator->extend('record_owner', 'Whitegfx\LaravelValidation\Rules\RecordOwner@validateRecordOwner', trans("laravel-validation::validation.record_owner"));
+        $validator->extend('bank_number', 'Whitegfx\LaravelValidation\Rules\BankNumber@validateBankNumber', trans("laravel-validation::validation.bank_number"));
+        $validator->extend('ico_number', 'Whitegfx\LaravelValidation\Rules\IcoNumber@validateIcoNumber', trans("laravel-validation::validation.ico_number"));
     }
 
     /**
