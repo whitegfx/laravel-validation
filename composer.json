@@ -12,7 +12,7 @@
     ],
     "homepage": "https://github.com/whitegfx/laravel-validation",
     "require": {
-        "php": "^7.3",
+        "php": "^8.0",
         "laravel/framework": "^8.0"
     },
     "require-dev": {
